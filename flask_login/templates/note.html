@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block tilte %}
+    Note
+{% endblock %}
+
+{% block content %}
+    Note for this appointment: health provider: {{app.health_provider.get_name()}} time:{{app.time}} message:{{app.message}}
+    {% if app.note %}
+        Current note is: {{app.note}}
+        <br>
+        Update Note
+    {% else %}
+        Create Note
+    {% endif %}
+    <br>
+    <form method="POST">
+        Please Write Note here:
+        <div style="margin: 10px 0px">
+            <label>Name: </label><br/>
+            <input name="note" placeholder="Note" value="{{note}}"/>
+        </div>
+        <div style="margin: 10px 0px">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+{% endblock %}

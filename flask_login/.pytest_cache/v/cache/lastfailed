@@ -1,0 +1,4 @@
+{
+  "test.py::test_empty_hc_search": true,
+  "testHASUser.py::test_appointment": true
+}

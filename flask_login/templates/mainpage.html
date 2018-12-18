@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block tilte %}
+    My page
+{% endblock %}
+
+{% block content %}
+    {% if user.get_identity() == 'patient' %}
+        <p>
+            <h3> Search Health Centre by: </h3>
+            <form method="POST">
+                <div style="margin: 10px 0px">
+                    <label>Name: </label><br/>
+                    <input name="name" placeholder="Name" value="{{name}}"/>
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>Suburb: </label><br/>
+                    <input name="suburb" placeholder="Suburb" value="{{suburb}}" />
+                </div>
+                <div style="Healthcare Service: 10px 0px">
+                    <label>Service Type: </label><br/>
+                    <input name="service_type" placeholder="Service type" value="{{service_type}}">
+                </div>
+                <div>
+                    <h3>Or search Health provider by name:</h3>
+                    <input name="health_provider_name" placeholder="health provider name" value="{{health_provider_name}}">
+                </div>
+                <div style="margin: 10px 0px">
+                    <button type="submit">Submit</button>
+                </div>
+                <br/>
+            </form>
+        </p>
+        {% if method == 'POST' %}
+        <p>
+            <h1>Search Result:</h1>
+            {% if hcResult %}
+                {% for hc in hcResult %}
+                    {% if hc %}
+                        <a href="{{url_for('health_centre_profile')}}?name={{hc.get_name()}}">
+                            {{hc.get_name()}}  ------------  Average rating: {{hc.get_average_rating()}}<br>
+                        </a>
+                    {% endif%}
+                {% endfor %}
+            {% endif %}
+            {% if hpResult %}
+                {% for hp in hpResult %}
+                    {% if hp %}
+                            <a href="{{url_for('profile')}}?id={{hp.get_id()}}">{{hp.get_name()}}</a>
+                            <br>
+                    {% endif%}
+                {% endfor %}
+            {% endif %}
+        </p>
+        {% endif %}
+    {% else %}
+        <h3>Search my patients</h3>
+        <form method="POST">
+                <div style="margin: 10px 0px">
+                    <label>Name: </label><br/>
+                    <input name="name" placeholder="Name" value="{{name}}"/>
+                </div>
+                <div style="margin: 10px 0px">
+                    <button type="submit">Submit</button>
+                </div>
+                <br/>
+            </form>
+        {% if method == 'POST' %}
+            {% if patientResult %}
+                <h4>history of {{patientResult.get_name()}}</h4>
+                {% for app in patientResult.get_appointment() %}
+                    appointment with: {{app.health_provider.get_name()}} time:{{app.time}} message:{{app.message}} note:{{app.note}}
+                    <br>
+                {% endfor %}
+            {% else %}
+                Patient not available. Please create new patient
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

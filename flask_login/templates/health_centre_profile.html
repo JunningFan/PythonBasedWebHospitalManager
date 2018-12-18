@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block tilte %}
+    Health centre
+{% endblock %}
+
+{% block content %}
+    <h3>You're viewing: {{health_centre.get_name()}}</h3>
+    <hr>
+    <h4>The average rating of this institution: {{health_centre.get_average_rating()}}</h4>
+    <p>
+        {% if health_centre.isRated(user) %}
+            Update your rating for this institution
+        {% else %}
+            Please make a rating
+        {% endif %}
+        <form method="POST">
+            <input type="number" min="1" max="10" name="rating">
+            <button type="submit">Submit rating</button>
+        </form>
+    </p>
+    <hr>
+    <p>
+        <h4>Health providers avaliable in this institution:</h4>
+        <br>
+        {% if health_centre.get_doctors() %}
+            {% for service in services %}
+                <h5>{{service}}:</h5>
+                {% for health_provider in health_centre.get_doctors() %}
+                    {% if health_provider.get_profile() == service %}
+                        <a href="{{url_for('profile')}}?id={{health_provider.get_id()}}">
+                            {{health_provider.get_name()}}
+                            <br>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% else %}
+        <h5>No health providers available. Please check again later</h5>
+        {% endif %}
+    </p>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block tilte %}
+    My page
+{% endblock %}
+
+{% block content %}
+    My current Appointments:
+    <br>
+    {% if not appointments %}
+        No appointments
+    {% elif identity == 'patient'%}
+        You have an appointment recently
+        <br>
+        {% for app in appointments %}
+            <a href="{{url_for('profile')}}?id={{app.health_provider.get_id()}}" >
+                DOCTOR: {{app.health_provider.get_name()}} TIME: {{app.time}} MESSAGE: {{app.message}} NOTE: {{app.note}}<br>
+            </a>
+        {% endfor %}
+    {% else %}
+        {% for app in appointments %}
+            <a href="{{url_for('profile')}}?id={{app.patient.get_id()}}" ></a>
+                PATIENT: {{app.patient.get_name()}} TIME: {{app.time}} MESSAGE: {{app.message}} NOTE: {{app.note}}
+                {% if app.note %}
+                    NOTE: {{app.note}}
+                {% else %}
+                    NOTE: EMPTY
+                {% endif %}
+                <form method="POST">
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: </label>
+                        <input name="note" placeholder="Note" value="{{note}}"/>
+                        <button type="submit" name="target_app_id" value="{{app.id}}">Submit</button>
+                        <input type="hidden" value="{{app.patient.get_name()}}" name="patient_name"">
+                </form>
+                <br>
+            </a>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

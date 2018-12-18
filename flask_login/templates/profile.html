@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block tilte %}
+    {{hp.get_name()}}'s profile
+{% endblock %}
+
+{% block content %}
+    <h1>{{hp.get_name()}}'s profile</h1><br>
+    {% if hp.get_identity() == "health_provider" %}
+        <p>
+            <h3>Service Type:</h3>
+            <font size='4'>{{hp.get_profile()}} </font>
+        </p>
+        <p>
+            <h5>The average rating of this personnel: {{hp.get_average_rating()}}</h5>
+            {% if hp.isRated(user) %}
+                Update your rating for this personnel
+            {% else %}
+                Please make a rating
+            {% endif %}
+            <form method="POST">
+                <input type="number" min="1" max="10" name="rating">
+                <button type="submit">Submit rating</button>
+            </form>
+        </p>
+        <a href="{{url_for('appointment')}}?id={{hp.get_id()}}"><button>Make an appointment</button></a>
+    {% endif %}
+{% endblock %}

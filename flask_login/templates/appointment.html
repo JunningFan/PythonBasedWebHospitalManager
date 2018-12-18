@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block tilte %}
+    Appointment
+{% endblock %}
+
+{% block content %}
+    <p>
+        <h4>You're making appointment with Health provider: {{health_provider_name}}</h4>
+        {% if pick_date %}
+            Please specify the date of visit
+            <form method="POST">
+                <input name="date" type="date" min="{{today}}">
+                <button type="submit" name='check'>Check avaliable time slots</button>
+            </form>
+        {% else %}
+            <h5>Target date is: {{date}}</h5>
+            <form method="POST">
+                Please choose an avaliable time slot
+                <br>
+                <input name='date' readonly value="{{date}}"></h5> 
+                {% for slot in time_slots %}
+                <br>
+                    <input type="radio" name="time" value="{{slot}}"> {{slot}}
+                {% endfor %}
+                <br>
+                You may also give a reason of visit
+                <input name="message" type="text">
+                <button type="submit" name='submit'>Make Appointment</button>
+                <button type="submit" name='cancel'>Cancel</button>
+            </form>
+        {% endif %}
+    </p>
+{% endblock %}

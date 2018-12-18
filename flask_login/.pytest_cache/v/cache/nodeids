@@ -1,0 +1,16 @@
+[
+  "test.py::test_createUser",
+  "test.py::test_AssignID",
+  "test.py::test_authenticate",
+  "test.py::test_search_hc_by_name",
+  "test.py::test_search_hc_by_type",
+  "test.py::test_search_hc_by_suburb",
+  "test.py::test_search_hp_by_name",
+  "test.py::TestRating::()::test_succ_make_hc",
+  "test.py::TestRating::()::test_succ_replace_hc",
+  "test.py::TestRating::()::test_succ_mult_hc",
+  "test.py::TestRating::()::test_empty_input_make_hc",
+  "test.py::test_getHealthProvider",
+  "test.py::test_getPatient",
+  "test.py::test_getTime"
+]
